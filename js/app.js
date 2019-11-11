@@ -1,8 +1,9 @@
 /* Global variables */
 const navBar = document.getElementById("items-nav");
+const header = document.getElementById('header');
 
 
-/* Function to create navbar items */
+/* --- Function to create navbar items --- */
 function createNavItems() {
     const items = document.querySelectorAll("section");
 
@@ -20,11 +21,10 @@ function createNavItems() {
 createNavItems();
 
 
-/* Create header elements */
+/* --- Create header elements --- */
 function createHeader() {
-    const header = document.getElementById('header');
 
-    /* create a title, 2 paragraphs and add to header */
+    /* create a title, 2 paragraphs and add they to header */
 
     const title = document.createElement('h1');
     title.textContent = 'What is a smartwatch?';
@@ -51,25 +51,29 @@ function createHeader() {
 createHeader();
 
 
-/* Create 4 sections about smartwatchs */
+/* --- Create 4 sections about smartwatchs --- */
 function createSections() {
 
     /* array of objects to save the data of each smartwatch */
     const doc = [
         {
-            info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt.',
+            info: 'Best Smartwatch on the market <br/><br/> Positive points: Better battery than last generation, Multiple apps, Many sensors, ' +
+            'Good quality OLED screen, 4G connection, Good fitness features <br/><br/> Negative points: Absurdly expensive, Compatible with iPhone only',
             image: './images/apple.png'
         },
         {
-            info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt.',
+            info: 'Best Smartwatch with Wear OS <br/><br/> Positive points: Affordable price, Good battery life, Waterproof, Responds well to commands, ' + 
+            'Beautiful and flashy design <br/><br/> Negative points: NFC not included, Basic training information only',
             image: './images/ticwatch.png'
         },
         {
-            info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt.',
+            info: 'Best Casual Smartwatch <br/><br/> Positive points: Good battery life, Circular design, Durable and durable smartwatch, Waterproof' +
+            '<br/><br/> Negative points: Applications must be installed at your own risk, Operating system could be more complete',
             image: './images/xiaomi.png'
         },
         {
-            info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt.',
+            info: 'Best Sports Smartwatch <br/><br/> Positive points: Great battery life, Good processor, Tizen OS, Very beautiful' +
+            '<br/><br/> Negative points: Without Google Maps, Whatsapp or Facebook, Proprietary Wireless Charger',
             image: './images/samsung.png'
         }
     ];
@@ -97,13 +101,14 @@ function createSections() {
         const title = document.createElement('h2');
         title.textContent = section.getAttribute('data-nav');
         
-        const info = document.createElement('p');
-        info.textContent = watchInfo.info;
+        const info = document.createElement('div');
+        info.innerHTML = watchInfo.info;
         
         article.appendChild(title)    
         article.appendChild(info)
+
         
-        /* add div and  article to section */
+        /* add div and article to section */
         section.appendChild(div);
         section.appendChild(article);
     });
@@ -112,14 +117,13 @@ function createSections() {
 createSections();
 
 
-
-/* scroll to top when button (id = btn-scroll-top) is clicked */
+/* --- scroll to top when button (id = btn-scroll-top) is clicked --- */
 document.getElementById("btn-scroll-top").addEventListener('click', function() {
     window.scrollTo(0, 0);
 })
 
   
-/* Show or hide button (id = btn-scroll-top) */
+/* --- Show or hide button (id = btn-scroll-top) --- */
 const showHideButton = () => {
     const btn = document.getElementById("btn-scroll-top");
     const showButton = window.scrollY > window.innerHeight / 3;
@@ -134,60 +138,37 @@ const showHideButton = () => {
 document.addEventListener("scroll", showHideButton);
 
 
-/* 
-https://stackoverflow.com/questions/1350581/how-to-get-an-elements-top-position-relative-to-the-browsers-viewport?noredirect=1&lq=1
-
-const activateMenuForMostVisibleSection = () => {
-    const indexOfMinBounding = getIndexOfMinPositiveBounding([...navItems]);
-  
-    // knowing index of minimum positive bounding value we are able to decide which menu item to activate
-    [...navItems].map((menu, index) => {
-      if (index === indexOfMinBounding) {
-        menu.classList.add("active");
-      } else {
-        menu.classList.remove("active");
-      }
-    })
-  };
-  
-const getIndexOfMinPositiveBounding = (sectionsArray) => {
-    // create a "bounding values" array representing top bounding values for all our sections
-    const boundingArray = sectionsArray.map( section => {
-      return section.getBoundingClientRect().top;
-    });
-  
-    // find the minimum positive bounding value
-    const minBounding = boundingArray.reduce((acc, item) => item < acc && item > 0 ? item : acc, Number.MAX_SAFE_INTEGER);
-  
-    // return index of minimum positive bounding to know which menu item we should make active
-    return boundingArray.findIndex(item => item === minBounding);
-};
-
-
-// 
-var rect = elem.getBoundingClientRect();
-var win = elem.ownerDocument.defaultView;
-
-return {
-    top: rect.top + win.pageYOffset,
-    left: rect.left + win.pageXOffset
-};
-
-
-//teste
-const activateMenuForMostVisibleSection = () => {
-    
+/* --- Get the section that is in the viewport --- */
+function showActiveSection() {
+    const sections = document.querySelectorAll("section[data-nav]");
     const navItems = document.querySelectorAll("a.links");
 
-    navItems.forEach(element => {
-        var rect = element.getBoundingClientRect();
-        var win = element.ownerDocument.defaultView;
+    [...sections].map((section) => {
+        [...navItems].map((item) => {
+            if (item.hash === ('#' + section.id)) {
+                if (isInViewport(section)) {
+                    item.classList.add("active");
+                    console.log('adiciona')
+                } else {
+                    item.classList.remove("active");
+                    console.log('remove')
+                }
+            }
+        })
+    })
+}
 
-        console.log(rect.top + '     ' + win.pageYOffset)
-    });
+/* verify if section is in viewport */
+function isInViewport(section) {
+    const bounding = section.getBoundingClientRect();
+    const headerHeidght = header.getBoundingClientRect().height;
+    
+    return (
+        ((bounding.top + headerHeidght) <= (document.documentElement.clientHeight, window.innerHeight /*window.pageYOffset*/ || 0) &&
+        (bounding.top + headerHeidght) + bounding.height >= 0) /*&&
+        (bounding.left <= (document.documentElement.clientWidth, window.innerWidth /*window.pageXOffset || 0) &&
+        bounding.left + bounding.height > 0)*/
+    );
 };
 
-
-document.addEventListener("scroll", activateMenuForMostVisibleSection)
-
-*/
+document.addEventListener("scroll", showActiveSection)
