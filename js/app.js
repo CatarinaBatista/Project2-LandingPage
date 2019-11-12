@@ -148,10 +148,10 @@ function showActiveSection() {
             if (item.hash === ('#' + section.id)) {
                 if (isInViewport(section)) {
                     item.classList.add("active");
-                    console.log('adiciona')
+                    //console.log('adiciona')
                 } else {
                     item.classList.remove("active");
-                    console.log('remove')
+                    //console.log('remove')
                 }
             }
         })
