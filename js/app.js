@@ -1,6 +1,7 @@
 /* Global variables */
 const navBar = document.getElementById("items-nav");
 const header = document.getElementById('header');
+let navItems = null;
 
 
 /* --- Function to create navbar items --- */
@@ -16,6 +17,8 @@ function createNavItems() {
 
         navBar.appendChild(li);
     }
+
+    navItems = document.querySelectorAll("a.links");
 };
 
 createNavItems();
@@ -77,9 +80,6 @@ function createSections() {
             image: './images/samsung.png'
         }
     ];
-    
-    /* save all navBar links */
-    const navItems = document.querySelectorAll("a.links");
 
     /* Go through navItems */
     navItems.forEach((item, index) => {        
@@ -141,22 +141,20 @@ document.addEventListener("scroll", showHideButton);
 /* --- Get the section that is in the viewport --- */
 function showActiveSection() {
     const sections = document.querySelectorAll("section[data-nav]");
-    const navItems = document.querySelectorAll("a.links");
 
     [...sections].map((section) => {
         [...navItems].map((item) => {
             if (item.hash === ('#' + section.id)) {
                 if (isInViewport(section)) {
                     item.classList.add("active");
-                    //console.log('adiciona')
                 } else {
                     item.classList.remove("active");
-                    //console.log('remove')
                 }
             }
         })
-    })
+    });
 }
+
 
 /* verify if section is in viewport */
 function isInViewport(section) {
