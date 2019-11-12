@@ -21,11 +21,15 @@
         position: fixed;
         width: 100%;
         top: 0;
+        opacity: 100%;
+        transition: opacity 0.5s ease-in-out;
     }
 
     .hide {
-        visibility: visible;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
     }
+
 
     nav h2 {
         font-size: 20px;
