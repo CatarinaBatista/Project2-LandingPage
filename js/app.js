@@ -1,7 +1,9 @@
 /* Global variables */
-const navBar = document.getElementById("items-nav");
+const navList = document.getElementById("items-nav");
 const header = document.getElementById('header');
+const navBar = document.querySelector("nav");
 let navItems = null;
+let isScrolling = false;
 
 
 /* --- Function to create navbar items --- */
@@ -15,7 +17,7 @@ function createNavItems() {
 
         li.innerHTML = `<a href="#${itemId}" class="links">${itemData}</a> | `;
 
-        navBar.appendChild(li);
+        navList.appendChild(li);
     }
 
     navItems = document.querySelectorAll("a.links");
@@ -48,7 +50,6 @@ function createHeader() {
         'style', 
         'display: flex; flex-direction: column; justify-content: center; text-align: center;'
     );
-
 };
 
 createHeader();
@@ -93,7 +94,7 @@ function createSections() {
         img.src = watchInfo.image;
         img.alt = section.getAttribute('data-nav');
 
-        div.appendChild(img)
+        div.appendChild(img);
 
         /* create an article and add a title and a paragraph */
         const article = document.createElement('article');
@@ -104,8 +105,8 @@ function createSections() {
         const info = document.createElement('div');
         info.innerHTML = watchInfo.info;
         
-        article.appendChild(title)    
-        article.appendChild(info)
+        article.appendChild(title);
+        article.appendChild(info);
 
         
         /* add div and article to section */
@@ -138,12 +139,12 @@ const showHideButton = () => {
 document.addEventListener("scroll", showHideButton);
 
 
-/* --- Get the section that is in the viewport --- */
+/* --- Active the section that is in the viewport --- */
 function showActiveSection() {
     const sections = document.querySelectorAll("section[data-nav]");
 
-    [...sections].map((section) => {
-        [...navItems].map((item) => {
+    sections.forEach(section => {
+        navItems.forEach(item => {
             if (item.hash === ('#' + section.id)) {
                 if (isInViewport(section)) {
                     item.classList.add("active");
@@ -151,10 +152,9 @@ function showActiveSection() {
                     item.classList.remove("active");
                 }
             }
-        })
+        });
     });
 }
-
 
 /* verify if section is in viewport */
 function isInViewport(section) {
@@ -162,11 +162,34 @@ function isInViewport(section) {
     const headerHeidght = header.getBoundingClientRect().height;
     
     return (
-        ((bounding.top + headerHeidght) <= (document.documentElement.clientHeight, window.innerHeight /*window.pageYOffset*/ || 0) &&
-        (bounding.top + headerHeidght) + bounding.height >= 0) /*&&
-        (bounding.left <= (document.documentElement.clientWidth, window.innerWidth /*window.pageXOffset || 0) &&
-        bounding.left + bounding.height > 0)*/
+        ((bounding.top + headerHeidght) <= (document.documentElement.clientHeight, window.innerHeight || 0) &&
+        (bounding.top + headerHeidght) - bounding.height >= -90)
     );
 };
 
-document.addEventListener("scroll", showActiveSection)
+document.addEventListener("scroll", showActiveSection);
+
+/* --- Show --- */
+function showNavBar() {
+    if (!isScrolling) {
+      isScrolling = true;
+      navBar.classList.remove("hide");
+  
+      setTimeout(autoHideMenu, 1500);
+
+      /* 
+        setTimeout(function() {
+            isScrolling = false;
+            navBar.classList.add("hide");
+        }, 1000);*/
+    }
+};
+
+  
+const autoHideMenu = () => {
+    isScrolling = false;
+    navBar.classList.add("hide");
+    console.log(navBar)
+};
+
+document.addEventListener("scroll", showNavBar);

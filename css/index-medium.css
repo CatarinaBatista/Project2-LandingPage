@@ -2,7 +2,7 @@
     .container {
         display: grid;
         grid-template-columns: 100%;
-        grid-template-rows: 60px 1fr 70px;
+        grid-template-rows: 1fr 70px;
     }
 
     html {
@@ -15,7 +15,6 @@
 
     /* navBar */
     nav {
-        grid-area: 1/1/2/2;
         background-color: black;
         color: white;
         display: flex;
@@ -24,6 +23,13 @@
         position: fixed;
         width: 97%;
         top: 0;
+        opacity: 100%;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .hide {
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
     }
 
     ul {
@@ -49,11 +55,11 @@
 
     /* main content */
     .main {
-        grid-area: 2/1/3/2;
+        grid-area: 1/1/2/2;
         background-image: linear-gradient(120deg, #6dffec 0%, #37fff2 25%, #3bf2ff 50%, #46ddff 75%, #43c9fa 100%);
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(5, 500px);
+        grid-template-rows: 560px repeat(4, 500px);
     }
 
     /* header */
@@ -137,7 +143,7 @@
 
     /* Footer */
     footer {
-        grid-area: 3/1/4/2;
+        grid-area: 2/1/3/2;
         background-color: black;
         color: white;
         display: flex;
