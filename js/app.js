@@ -108,7 +108,6 @@ function createSections() {
         article.appendChild(title);
         article.appendChild(info);
 
-        
         /* add div and article to section */
         section.appendChild(div);
         section.appendChild(article);
@@ -123,7 +122,7 @@ document.getElementById("btn-scroll-top").addEventListener('click', function() {
     window.scrollTo(0, 0);
 })
 
-  
+
 /* --- Show or hide button (id = btn-scroll-top) --- */
 const showHideButton = () => {
     const btn = document.getElementById("btn-scroll-top");
@@ -169,27 +168,17 @@ function isInViewport(section) {
 
 document.addEventListener("scroll", showActiveSection);
 
-/* --- Show --- */
+/* --- Show navBar and hide it after 1.5s --- */
 function showNavBar() {
     if (!isScrolling) {
-      isScrolling = true;
-      navBar.classList.remove("hide");
-  
-      setTimeout(autoHideMenu, 1500);
-
-      /* 
+        isScrolling = true;
+        navBar.classList.remove("hide");
+    
         setTimeout(function() {
             isScrolling = false;
             navBar.classList.add("hide");
-        }, 1000);*/
+        }, 1500);
     }
-};
-
-  
-const autoHideMenu = () => {
-    isScrolling = false;
-    navBar.classList.add("hide");
-    console.log(navBar)
 };
 
 document.addEventListener("scroll", showNavBar);

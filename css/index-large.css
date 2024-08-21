@@ -23,17 +23,21 @@
         position: fixed;
         width: 98%;
         top: 0;
+        opacity: 100%;
+        transition: opacity 0.5s ease-in-out;
     }
 
     .hide {
-        visibility: visible;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
     }
+
 
     ul {
         margin-right: 0;
         margin-left: auto;
     }
-      
+
     li {
         display: inline-block;
         margin: 0;
